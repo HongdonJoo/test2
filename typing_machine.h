@@ -4,11 +4,15 @@
 #define TYPING_MACHINE_H_
 
 #include <string>
-
+using namespace std;
 #include "node.h"
 
 class TypingMachine {
  public:
+	 Node * current;
+	 Node * home;
+	 Node * end;
+	 string buffer;
   TypingMachine();
   void HomeKey();
   void EndKey();
