@@ -1,7 +1,6 @@
 // Copyright 2018 <Author>
 #include "typing_machine.h"
 #include <string>
-using namespace std;
 
 TypingMachine::TypingMachine() {
 	home = nullptr;
@@ -39,11 +38,15 @@ bool TypingMachine::TypeKey(char key) {
 		return false;
 	if (current == nullptr)
 	{
-		current = new Node(key);
-		current->nextNode = home;
-		if ( home != nullptr)
-			home->previousNode = current;
-		home = current;
+		if (home != nullptr)
+		{
+			home = home->InsertPreviousNode(key);
+			current = home->GetNextNode();
+		}
+		else {
+			current = new Node(key);
+			home = end = current;
+		}
 	}
 	else {
 		Node * insertNode = current->InsertNextNode(key);
