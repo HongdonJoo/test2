@@ -4,9 +4,9 @@
 using namespace std;
 
 TypingMachine::TypingMachine() {
-	home = new Node(' ');
-	current = home;
-	end = home;
+	home = nullptr;
+	current = nullptr;
+	end = nullptr;
   return;
 }
 
@@ -21,27 +21,53 @@ void TypingMachine::EndKey() {
 }
 
 void TypingMachine::LeftKey() {
-	current = current ->GetPreviousNode ();
+	if (current != nullptr && current->GetPreviousNode() != nullptr)
+	    current = current ->GetPreviousNode ();
   return;
 }
 
 void TypingMachine::RightKey() {
+	if (current != nullptr && current->GetNextNode() != nullptr)
 	current = current->GetNextNode();
   return;
 }
 
 bool TypingMachine::TypeKey(char key) {
-	Node * insertNode = current->InsertNextNode(key);
-	if (current == end)
-		end = insertNode;
-
+	if (current == nullptr)
+	{
+		current = new Node(key);
+		home = current;
+		end = current;
+	}
+	else {
+		Node * insertNode = current->InsertNextNode(key);
+		
+		if (current == end)
+			end = insertNode;
+		current = insertNode;
+	}
   return false;
 }
 
 bool TypingMachine::EraseKey() {
-	current -> EraseNextNode();
-	if (current->GetNextNode() == nullptr)
-		end = current;
+	if (current == nullptr)
+		return false;
+	if (current->GetPreviousNode() != nullptr)
+	{
+		current = current->GetPreviousNode();
+		current->EraseNextNode();
+		if (current->GetNextNode() == nullptr)
+			end = current;
+	}
+	else if (current->GetNextNode() != nullptr)
+	{
+		current = current->GetNextNode();
+		current->ErasePreviousNode();
+		home = current;
+	}
+	else
+		delete  current;
+	home = current = end = nullptr;
 		
   return false;
 }
@@ -50,13 +76,13 @@ std::string TypingMachine::Print(char separator) {
 	Node *tempNode;
 
 	buffer.clear();
-	for (tempNode = home; tempNode != nullptr;)
+	for (tempNode = home; tempNode != nullptr; tempNode = tempNode->GetNextNode())
 	{
+		buffer.push_back(tempNode->GetData());
 		if (tempNode == current)
 			buffer.push_back(separator);
-		buffer.push_back(tempNode->GetData());
-		tempNode = tempNode->GetNextNode();
 	}
-
+	if ( home == nullptr)
+		buffer.push_back(separator);
 	return buffer;
 }
