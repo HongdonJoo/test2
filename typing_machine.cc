@@ -11,7 +11,7 @@ TypingMachine::TypingMachine() {
 }
 
 void TypingMachine::HomeKey() {
-	current = home;
+	current = nullptr;
   return;
 }
 
@@ -21,30 +21,38 @@ void TypingMachine::EndKey() {
 }
 
 void TypingMachine::LeftKey() {
-	if (current != nullptr && current->GetPreviousNode() != nullptr)
+	if (current != nullptr)
 	    current = current ->GetPreviousNode ();
   return;
 }
 
 void TypingMachine::RightKey() {
-	if (current != nullptr && current->GetNextNode() != nullptr)
-	current = current->GetNextNode();
+	if (current == nullptr)
+		current = home;
+	else if ( current->GetNextNode() != nullptr)
+	    current = current->GetNextNode();
   return;
 }
 
 bool TypingMachine::TypeKey(char key) {
-	if (current == nullptr)
+	if (current == nullptr && home == nullptr)
 	{
 		current = new Node(key);
 		home = current;
 		end = current;
 	}
 	else {
-		Node * insertNode = current->InsertNextNode(key);
-		
-		if (current == end)
-			end = insertNode;
-		current = insertNode;
+		if (current != nullptr)
+		{
+			Node * insertNode = current->InsertNextNode(key);
+
+			if (current == end)
+				end = insertNode;
+			current = insertNode;
+		}
+		else 
+			current = home = home->InsertPreviousNode(key);
+
 	}
   return false;
 }
@@ -71,20 +79,21 @@ bool TypingMachine::EraseKey() {
 		home = current = end = nullptr;
 	}
 		
-  return false;
+  return true;
 }
 
 std::string TypingMachine::Print(char separator) {
 	Node *tempNode;
 
 	buffer.clear();
+	if (current == nullptr)
+		buffer.push_back(separator);
 	for (tempNode = home; tempNode != nullptr; tempNode = tempNode->GetNextNode())
 	{
 		buffer.push_back(tempNode->GetData());
 		if (tempNode == current)
 			buffer.push_back(separator);
 	}
-	if ( home == nullptr)
-		buffer.push_back(separator);
+
 	return buffer;
 }
