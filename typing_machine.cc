@@ -41,7 +41,7 @@ bool TypingMachine::TypeKey(char key) {
 		if (home != nullptr)
 		{
 			home = home->InsertPreviousNode(key);
-			current = home->GetNextNode();
+			current = home;
 		}
 		else {
 			current = new Node(key);
