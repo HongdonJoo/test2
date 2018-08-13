@@ -22,7 +22,7 @@ void TypingMachine::EndKey() {
 
 void TypingMachine::LeftKey() {
 	if (current != nullptr)
-	    current = current ->GetPreviousNode ();
+	    current = current -> GetPreviousNode ();
   return;
 }
 
@@ -35,6 +35,8 @@ void TypingMachine::RightKey() {
 }
 
 bool TypingMachine::TypeKey(char key) {
+	if (key < 32 || key >126)
+		return false;
 	if (current == nullptr && home == nullptr)
 	{
 		current = new Node(key);
@@ -54,7 +56,7 @@ bool TypingMachine::TypeKey(char key) {
 			current = home = home->InsertPreviousNode(key);
 
 	}
-  return false;
+	return true;
 }
 
 bool TypingMachine::EraseKey() {
@@ -72,7 +74,8 @@ bool TypingMachine::EraseKey() {
 	{
 		current = current->GetNextNode();
 		current->ErasePreviousNode();
-		home = current;
+		home = current ;
+		current = nullptr;
 	}
 	else {
 		delete  current;
