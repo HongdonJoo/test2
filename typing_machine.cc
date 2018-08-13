@@ -37,23 +37,19 @@ void TypingMachine::RightKey() {
 bool TypingMachine::TypeKey(char key) {
 	if (key < 32 || key >126)
 		return false;
-	if (current == nullptr && home == nullptr)
+	if (current == nullptr)
 	{
 		current = new Node(key);
+		current->nextNode = home;
+		if ( home != nullptr)
+			home->previousNode = current;
 		home = current;
-		end = current;
 	}
 	else {
-		if (current != nullptr)
-		{
-			Node * insertNode = current->InsertNextNode(key);
-
-			if (current == end)
-				end = insertNode;
-			current = insertNode;
-		}
-		else 
-			current = home = home->InsertPreviousNode(key);
+		Node * insertNode = current->InsertNextNode(key);
+		if (current == end)
+			end = insertNode;
+		current = insertNode;
 
 	}
 	return true;
