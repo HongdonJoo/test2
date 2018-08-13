@@ -6,6 +6,9 @@
 #include "node.h"
 #include "typing_machine.h"
 #include "getch.h"
+#include "test.h"
+#include "typing_machine_test.h"
+#include "node_test.h"
 
 const char full_board[5][34] = {
   "+-------+   +-------+   +-------+",
@@ -129,6 +132,7 @@ void TestTypingMachine() {
         tape.EndKey();
         break;
       }
+	  case '0':
       case KEY_DEL: {
         tape.EraseKey();
         break;
@@ -154,6 +158,14 @@ int main() {
       TestTypingMachine();
       return 0;
     }
+	if (user_key == '3') {
+		
+		cout << "testing node \n";
+		NodeTest();
+		cout << "testing Type machine\n";
+		TypingMachineTest();
+		return 0;
+	}
   }
 }
 

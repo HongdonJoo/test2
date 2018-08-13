@@ -13,6 +13,7 @@ class TypingMachine {
 	 Node * home;
 	 Node * end;
 	 string buffer;
+	 int size;
   TypingMachine();
   void HomeKey();
   void EndKey();

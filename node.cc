@@ -52,7 +52,7 @@ Node* Node::InsertNextNode(char data) {
 bool Node::ErasePreviousNode() {
   if (previousNode == nullptr)
       return false;
-  Node * ppreviousNode = previousNode->previousNode;
+  Node * ppreviousNode = previousNode->GetPreviousNode();
   if (ppreviousNode)
 	  ppreviousNode->nextNode = this;
   delete previousNode;
@@ -63,7 +63,7 @@ bool Node::ErasePreviousNode() {
 bool Node::EraseNextNode() {
 	if ( nextNode == nullptr)
 		return false;
-	Node * nnextNode = nextNode->nextNode;
+	Node * nnextNode = nextNode->GetNextNode();
 	if (nnextNode != nullptr)
 		nnextNode->previousNode =this;
 	delete nextNode;
