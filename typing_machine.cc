@@ -1,11 +1,12 @@
 // Copyright 2018 <Author>
 #include "typing_machine.h"
 #include <string>
-
+#define MAX_DATA_SIZE 100
 TypingMachine::TypingMachine() {
 	home = nullptr;
 	current = nullptr;
 	end = nullptr;
+	size = 0;
   return;
 }
 
@@ -36,6 +37,9 @@ void TypingMachine::RightKey() {
 bool TypingMachine::TypeKey(char key) {
 	if (key < 32 || key >126)
 		return false;
+	if (size >= MAX_DATA_SIZE)
+		return false;
+	size++;
 	if (current == nullptr)
 	{
 		if (home != nullptr)
@@ -61,7 +65,7 @@ bool TypingMachine::TypeKey(char key) {
 bool TypingMachine::EraseKey() {
 	if (current == nullptr)
 		return false;
-
+	size--;
 	if (current->GetPreviousNode() != nullptr)
 	{
 		current = current->GetPreviousNode();
@@ -88,6 +92,9 @@ std::string TypingMachine::Print(char separator) {
 	Node *tempNode;
 
 	buffer.clear();
+	if (separator == 0)
+		return buffer;
+
 	if (current == nullptr)
 		buffer.push_back(separator);
 	for (tempNode = home; tempNode != nullptr; tempNode = tempNode->GetNextNode())
