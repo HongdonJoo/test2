@@ -52,6 +52,7 @@ bool TypingMachine::TypeKey(char key) {
 bool TypingMachine::EraseKey() {
 	if (current == nullptr)
 		return false;
+
 	if (current->GetPreviousNode() != nullptr)
 	{
 		current = current->GetPreviousNode();
@@ -65,9 +66,10 @@ bool TypingMachine::EraseKey() {
 		current->ErasePreviousNode();
 		home = current;
 	}
-	else
+	else {
 		delete  current;
-	home = current = end = nullptr;
+		home = current = end = nullptr;
+	}
 		
   return false;
 }
