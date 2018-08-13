@@ -92,15 +92,13 @@ std::string TypingMachine::Print(char separator) {
 	Node *tempNode;
 
 	buffer.clear();
-	if (separator == 0)
-		return buffer;
 
 	if (current == nullptr)
 		buffer.push_back(separator);
 	for (tempNode = home; tempNode != nullptr; tempNode = tempNode->GetNextNode())
 	{
 		buffer.push_back(tempNode->GetData());
-		if (tempNode == current)
+		if (tempNode == current && separator != 0)
 			buffer.push_back(separator);
 	}
 
