@@ -93,7 +93,7 @@ std::string TypingMachine::Print(char separator) {
 
 	buffer.clear();
 
-	if (current == nullptr)
+	if (current == nullptr && separator != 0)
 		buffer.push_back(separator);
 	for (tempNode = home; tempNode != nullptr; tempNode = tempNode->GetNextNode())
 	{
