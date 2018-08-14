@@ -7,19 +7,19 @@ Node::Node(char data) {
 	nodeData = data;
 	previousNode = nullptr;
 	nextNode = nullptr;
-  return;
+	return;
 }
 
 char Node::GetData() {
-  return nodeData;
+	return nodeData;
 }
 
 Node* Node::GetPreviousNode() {
-		return previousNode;
+	return previousNode;
 }
 
 Node* Node::GetNextNode() {
-		return nextNode;
+	return nextNode;
 }
 
 Node* Node::InsertPreviousNode(char data) {
@@ -27,11 +27,14 @@ Node* Node::InsertPreviousNode(char data) {
 	Node * insertNode = new Node(data);
 
 	if (previousNode)
-	    previousNode->nextNode = insertNode;
-	insertNode->previousNode = previousNode;
+		previousNode->nextNode = insertNode;
+	// Insert Node Parameter set
+	insertNode -> previousNode = previousNode;
 	insertNode -> nextNode = this;
+
+	//Previous node parameter set
 	previousNode = insertNode;
-  return insertNode;
+	return insertNode;
 
 }
 
@@ -39,30 +42,32 @@ Node* Node::InsertNextNode(char data) {
 	Node * insertNode = new Node(data);
 
 	insertNode->previousNode = this;
+	insertNode->nextNode = nextNode;
 
 	if (nextNode)
-	{
 		nextNode->previousNode = insertNode;
-		insertNode->nextNode = nextNode;
-	}
+	
 	nextNode = insertNode;
-  return insertNode;
+	return insertNode;
 }
 
 bool Node::ErasePreviousNode() {
-  if (previousNode == nullptr)
-      return false;
-  Node * ppreviousNode = previousNode->GetPreviousNode();
-  if (ppreviousNode)
-	  ppreviousNode->nextNode = this;
-  delete previousNode;
-  previousNode = ppreviousNode;
-  return true;
+
+	if (previousNode == nullptr)
+		return false;
+
+	Node * ppreviousNode = previousNode->GetPreviousNode();
+	if (ppreviousNode)
+		ppreviousNode->nextNode = this;
+	delete previousNode;
+	previousNode = ppreviousNode;
+	return true;
 }
 
 bool Node::EraseNextNode() {
 	if ( nextNode == nullptr)
 		return false;
+
 	Node * nnextNode = nextNode->GetNextNode();
 	if (nnextNode != nullptr)
 		nnextNode->previousNode =this;
